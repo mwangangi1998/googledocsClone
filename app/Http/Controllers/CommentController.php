@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\commentsResource;
 use App\Models\Comment;
 use App\Http\Requests\StoreCommentRequest;
 use App\Http\Requests\UpdateCommentRequest;
@@ -12,16 +13,12 @@ class CommentController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return commentsResource
      */
     public function index()
     {
 $data=Comment::query()->get();
-return new JsonResponse(
-    [
-        'data'=>$data
-    ]
-);
+return commentsResource::collection($data);
     }
 
     /**
@@ -50,13 +47,11 @@ return new JsonResponse(
      * Display the specified resource.
      *
      * @param  \App\Models\Comment  $comment
-     * @return \Illuminate\Http\JsonResponse
+     * @return commentsResource
      */
     public function show(Comment $comment)
     {
-        return new JsonResponse([
-            'data'=>$comment
-        ]);
+        return new commentsResource($comment);
     }
 
     /**

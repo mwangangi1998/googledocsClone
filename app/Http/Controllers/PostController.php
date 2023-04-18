@@ -34,18 +34,18 @@ $posts=Post::query()->get();
      */
     public function store(StorePostRequest $request)
     {
-        $created=DB::transaction( function() use ($request){
-  $created=Post::query()->create(
-      [
-          'title'=>$request->title,
-          'body'=>$request->body,
-          ]
-      );
-      $created->users()->sync($request->use_ids);
-      return $created;
+        $created = DB::transaction(function () use ($request) {
+            $created = Post::query()->create(
+                [
+                    'title' => $request->title,
+                    'body' => $request->body,
+                ]
+            );
+            $created->users()->sync($request->use_ids);
+            return $created;
 
-    });
-
+        });
+    }
     /**
      * Display the specified resource.
      *
